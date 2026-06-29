@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
 <title>Music Room · ミュージックルーム — Hero's Proof</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fredoka:wght@400;500;600;700&family=Zen+Maru+Gothic:wght@400;500;700;900&family=Kosugi+Maru&display=swap" rel="stylesheet">
 <style>
@@ -30,6 +32,7 @@ a{color:inherit;}
 .story-header{text-align:center;padding:18px 0 26px;position:relative;text-decoration:none;display:block;cursor:pointer;transition:opacity .2s;}
 .story-header:hover{opacity:.85;}
 .story-header::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:220px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.hp-logo{max-height:96px;max-width:80%;object-fit:contain;display:block;margin:0 auto 12px;filter:drop-shadow(0 2px 14px rgba(167,139,250,.5));}
 .story-eyebrow{font-family:'Press Start 2P',monospace;font-size:clamp(.42rem,1.9vw,.58rem);color:var(--gold-light);letter-spacing:.18em;opacity:.75;margin-bottom:14px;text-shadow:0 0 20px rgba(240,208,96,.4);}
 .story-title{font-family:'Press Start 2P',monospace;font-size:clamp(1.05rem,4.2vw,1.65rem);color:#fff;line-height:1.5;text-shadow:0 0 36px rgba(200,160,224,.55),0 0 70px rgba(144,96,192,.3);}
 .story-title .jp{display:block;font-family:'Zen Maru Gothic','Kosugi Maru',sans-serif;font-size:clamp(1.05rem,3.1vw,1.5rem);color:var(--gold-light);letter-spacing:.2em;margin-top:10px;text-shadow:0 0 20px rgba(240,208,96,.4);}
@@ -136,6 +139,7 @@ footer{margin-top:62px;text-align:center;padding:26px 0;border-top:1px solid rgb
 <div class="page">
 
   <a class="story-header" href="https://herosproof.github.io">
+    <img class="hp-logo" src="logo.png" alt="Hero's Proof" onerror="this.style.display='none'">
     <p class="story-eyebrow">✦ Hero's Proof · 勇者の証 ✦</p>
     <h1 class="story-title">Music Room<span class="jp">ミュージックルーム</span></h1>
   </a>
@@ -190,7 +194,7 @@ const LYRICS_MAIN=[
   ]],
   ['Verse 2',[
     ['Where are you from? Who are you?','どこから来た？君は誰？'],
-    ["I'm a hero, just like you!",'私もヒーロー、君と同じ！'],
+    ["I'm a hero, just like you!",'僕もヒーロー、君と同じ！'],
     ['Four crystals hiding, far and wide,','四つの水晶、隠れてる、'],
     ['We can do it! We can try!','できるよ！挑戦しよう！'],
   ]],
@@ -202,11 +206,11 @@ const LYRICS_MAIN=[
     ["Hero's Proof! We can do it!",'ヒーローズ・プルーフ(勇者の証)！できるよ！'],
     ["Together we'll get through it!",'一緒に乗り越えよう！'],
     ['Magic, friends, and courage too,','魔法、友達、勇気もね、'],
-    ["This is our adventure! Let's go! Let's go!",'これが私たちの冒険！行こう！行こう！'],
+    ["This is our adventure! Let's go! Let's go!",'これが冒険！行こう！行こう！'],
   ]],
   ['Verse 3',[
     ['What do you like? What do you do?','何が好き？何してる？'],
-    ['I want to go there—me and you!','一緒に行きたい、私と君！'],
+    ['I want to go there—me and you!','一緒に行きたい、僕と君！'],
     ['From the castle to the stars above,','お城から空の星まで、'],
     ["This is what we're fighting for!",'これが戦う理由だよ！'],
   ]],
@@ -214,13 +218,13 @@ const LYRICS_MAIN=[
     ['In the forest, on the mountain high,','森の中、高い山で、'],
     ['We will save the world tonight!','今夜世界を救うんだ！'],
     ["Here we go, it's our time to shine,",'さあ行こう、輝く時、'],
-    ['Heroes now! This proof is mine!','ヒーローだよ！この証は私のもの！'],
+    ['Heroes now! This proof is mine!','ヒーローだよ！この証は僕のもの！'],
   ]],
   ['Final Chorus',[
     ["Hero's Proof! We can do it!",'ヒーローズ・プルーフ(勇者の証)！できるよ！'],
     ["Together we'll get through it!",'一緒に乗り越えよう！'],
     ['Magic, friends, and courage too,','魔法、友達、勇気もね、'],
-    ['We are heroes! Me and you!','私たちはヒーロー！僕と君！'],
+    ['We are heroes! Me and you!','僕らはヒーロー！僕と君！'],
   ]],
   ['Outro',[
     ["Hero's Proof...",'ヒーローズ・プルーフ(勇者の証)...'],
@@ -230,13 +234,13 @@ const LYRICS_MAIN=[
 const TRACKS=[
   {id:'main',accent:'#c9a030',disc:'💿',
    tagEn:'Theme Song',tagJp:'テーマソング',
-   titleEn:"Hero's Proof (Main Theme)",titleJp:'ヒーローズ・プルーフ（メインテーマ）',
+   titleEn:"Hero's Proof (Main Theme)",titleJp:'勇者の証（メインテーマ）',
    descEn:'The main theme of Hero\u2019s Proof — a bright, soaring anthem about courage, friendship, and adventure.',
    descJp:'「勇者の証」のメインテーマ。勇気と友情、そして冒険をうたう、明るくて壮大なテーマソングだよ。',
    file:'main-theme.mp3',lyrics:LYRICS_MAIN},
   {id:'electric',accent:'#3a78c0',disc:'⚡',
    tagEn:'Remix',tagJp:'リミックス',
-   titleEn:"Hero's Proof v39-ish (Electric Mix)",titleJp:'ヒーローズ・プルーフ v39-ish（エレクトリックミックス）',
+   titleEn:"Hero's Proof v39-ish (Electric Mix)",titleJp:'勇者の証 v39-ish（エレクトリックミックス）',
    descEn:'A high-energy electronic remix of the main theme, with crisp synth-vocals and driving beats turned all the way up.',
    descJp:'メインテーマをアップテンポにアレンジしたエレクトロ・リミックス。きらめくシンセボーカルと力強いビートで、パワー全開のバージョンだよ。',
    file:'electric-mix.mp3',lyrics:LYRICS_MAIN},
