@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Music Room · ミュージックルーム — Hero's Proof</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fredoka:wght@400;500;600;700&family=Zen+Maru+Gothic:wght@400;500;700;900&family=Kosugi+Maru&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#3a2558;--bg2:#2a1845;--panel2:#1e1235;
+  --cream:#f5eedc;--card-bg:rgba(245,238,220,0.97);--border-gold:rgba(245,158,11,0.25);
+  --purple:#9060c0;--purple-light:#c8a0e0;--purple-pale:#ede0f8;--purple-dark:#4a3870;
+  --gold:#c9a030;--gold-light:#f0d060;--gold-pale:#f8f0c0;
+  --brown:#5c2810;--text-dark:#1e1235;--text-soft:#3a2558;--text-muted:rgba(200,160,224,.78);
+  --green:#4a9040;--red:#c83030;--sky:#2858b8;--shadow:rgba(0,0,0,0.4);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{font-family:'Fredoka','Kosugi Maru','Zen Maru Gothic',sans-serif;background:var(--bg);color:var(--cream);min-height:100vh;overflow-x:hidden;}
+button{font-family:inherit;cursor:pointer;}
+a{color:inherit;}
+:focus-visible{outline:3px solid var(--gold-light);outline-offset:2px;border-radius:6px;}
+
+.starfield{position:fixed;inset:0;pointer-events:none;z-index:0;}
+.starfield span{position:absolute;animation:twinkle var(--d,3s) ease-in-out infinite var(--delay,0s);display:flex;align-items:center;justify-content:center;font-size:var(--sz,1rem);color:var(--col,#fde68a);text-shadow:0 0 6px var(--col,#fde68a);line-height:1;}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(.3) rotate(0deg)}50%{opacity:.9;transform:scale(1) rotate(20deg)}}
+
+.page{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:0 16px 80px;}
+
+.story-header{text-align:center;padding:18px 0 26px;position:relative;text-decoration:none;display:block;cursor:pointer;transition:opacity .2s;}
+.story-header:hover{opacity:.85;}
+.story-header::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:220px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.story-eyebrow{font-family:'Press Start 2P',monospace;font-size:clamp(.42rem,1.9vw,.58rem);color:var(--gold-light);letter-spacing:.18em;opacity:.75;margin-bottom:14px;text-shadow:0 0 20px rgba(240,208,96,.4);}
+.story-title{font-family:'Press Start 2P',monospace;font-size:clamp(1.05rem,4.2vw,1.65rem);color:#fff;line-height:1.5;text-shadow:0 0 36px rgba(200,160,224,.55),0 0 70px rgba(144,96,192,.3);}
+.story-title .jp{display:block;font-family:'Zen Maru Gothic','Kosugi Maru',sans-serif;font-size:clamp(1.05rem,3.1vw,1.5rem);color:var(--gold-light);letter-spacing:.2em;margin-top:10px;text-shadow:0 0 20px rgba(240,208,96,.4);}
+
+.room-intro{text-align:center;font-family:'Zen Maru Gothic','Kosugi Maru',sans-serif;font-size:1rem;color:var(--purple-light);line-height:1.85;margin:6px 0 32px;}
+.room-intro .jp{display:block;color:var(--text-muted);margin-top:4px;}
+
+/* ════════════ TRACK CARDS ════════════ */
+.track-list{display:flex;flex-direction:column;gap:18px;}
+.track-card{
+  position:relative;background:var(--card-bg);border:1px solid var(--border-gold);
+  border-radius:18px;padding:20px 22px 22px;color:var(--text-dark);
+  box-shadow:0 4px 24px var(--shadow),inset 0 1px 0 rgba(255,255,255,.8);overflow:hidden;
+}
+.track-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--c-accent,var(--gold)),transparent);}
+.track-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:10px;}
+.track-disc{
+  flex:0 0 auto;width:54px;height:54px;border-radius:50%;
+  background:radial-gradient(circle at 50% 50%,#1a1a1a 0,#1a1a1a 28%,var(--c-accent,var(--gold)) 30%,#1a1a1a 32%,#1a1a1a 100%);
+  display:flex;align-items:center;justify-content:center;font-size:1.3rem;
+  box-shadow:0 3px 10px rgba(0,0,0,.4);
+  animation:spin 4s linear infinite paused;
+}
+.track-disc.spinning{animation-play-state:running;}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.track-tag{font-family:'Fredoka',sans-serif;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--brown);opacity:.82;font-weight:600;}
+.track-tag .jp{font-family:'Zen Maru Gothic','Kosugi Maru',sans-serif;font-size:.78rem;margin-left:4px;opacity:.8;letter-spacing:.02em;text-transform:none;}
+.track-title{font-size:1.18rem;font-weight:700;line-height:1.3;margin-top:2px;}
+.track-title .jp{display:block;font-family:'Zen Maru Gothic','Kosugi Maru',sans-serif;font-size:.92rem;color:var(--text-soft);font-weight:600;margin-top:2px;}
+.track-desc{font-size:.92rem;color:var(--text-soft);line-height:1.7;margin-bottom:14px;}
+.track-desc .jp{display:block;font-family:'Zen Maru Gothic','Kosugi Maru',sans-serif;font-size:.86rem;color:rgba(70,48,30,.85);margin-top:3px;line-height:1.7;}
+
+/* ── custom player ── */
+.player{display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.05);border-radius:30px;padding:7px 14px 7px 7px;}
+.play-btn{
+  flex:0 0 auto;width:38px;height:38px;border-radius:50%;border:none;
+  background:var(--c-accent,var(--purple));color:#fff;font-size:.95rem;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.3);transition:transform .15s;
+}
+.play-btn:active{transform:scale(.92);}
+.prog-track{flex:1;height:6px;border-radius:4px;background:rgba(0,0,0,.15);cursor:pointer;position:relative;}
+.prog-fill{height:100%;border-radius:4px;background:var(--c-accent,var(--purple));width:0%;}
+.time{flex:0 0 auto;font-size:.74rem;font-weight:600;color:var(--text-soft);min-width:74px;text-align:right;font-family:'Fredoka',sans-serif;}
+
+.track-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:13px;}
+.dl-btn{
+  background:transparent;border:1px solid var(--c-accent,var(--purple));
+  color:var(--c-accent,var(--purple));border-radius:20px;padding:7px 16px;
+  font-size:.8rem;font-weight:600;font-family:'Fredoka',sans-serif;
+  display:inline-flex;align-items:center;gap:6px;text-decoration:none;
+  transition:background .2s,color .2s;
+}
+.dl-btn:hover{background:var(--c-accent,var(--purple));color:#fff;}
+
+/* ── lyrics ── */
+.lyrics-toggle{
+  background:transparent;border:1px solid var(--c-accent,var(--purple));
+  color:var(--c-accent,var(--purple));border-radius:20px;padding:7px 16px;
+  font-size:.8rem;font-weight:600;font-family:'Fredoka',sans-serif;
+  display:inline-flex;align-items:center;gap:6px;transition:background .2s,color .2s;
+}
+.lyrics-toggle:hover{background:var(--c-accent,var(--purple));color:#fff;}
+.lyrics-panel{margin-top:14px;border-top:1px dashed rgba(138,103,18,.35);padding-top:14px;}
+.lyrics-panel.hide{display:none;}
+.lyric-section{font-family:'Fredoka',sans-serif;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--c-accent,var(--purple));font-weight:700;margin:16px 0 7px;}
+.lyric-section:first-child{margin-top:0;}
+.lyric-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:6px;align-items:start;}
+.lyric-row .en{font-size:.92rem;line-height:1.5;color:var(--text-dark);}
+.lyric-row .jp{font-family:'Zen Maru Gothic','Kosugi Maru',sans-serif;font-size:.86rem;line-height:1.55;color:var(--text-soft);}
+.lyric-head{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(138,103,18,.2);}
+.lyric-head span{font-family:'Fredoka',sans-serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--brown);opacity:.7;font-weight:700;}
+@media(max-width:480px){
+  .lyric-row,.lyric-head{grid-template-columns:1fr;gap:2px;}
+  .lyric-row{margin-bottom:11px;}
+  .lyric-row .jp{opacity:.9;}
+  .lyric-head{display:none;}
+}
+
+footer{margin-top:62px;text-align:center;padding:26px 0;border-top:1px solid rgba(201,160,48,.12);}
+.footer-text{font-family:'Zen Maru Gothic','Kosugi Maru',sans-serif;font-size:.86rem;color:rgba(217,201,168,.45);letter-spacing:.08em;line-height:2;}
+.footer-text span{color:rgba(201,160,48,.45);}
+
+.hub-row{text-align:center;margin-top:50px;}
+.btn-hub{
+  font-family:'Fredoka',sans-serif;font-size:.9rem;font-weight:600;
+  color:rgba(200,160,224,.75);background:transparent;
+  border:1px solid rgba(167,139,250,.25);border-radius:50px;padding:9px 24px;
+  cursor:pointer;text-decoration:none;display:inline-block;
+  transition:color .2s,border-color .2s;
+}
+.btn-hub:hover{color:var(--gold-light);border-color:rgba(245,158,11,.4);}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01s!important;}
+  html{scroll-behavior:auto;}
+}
+</style>
+</head>
+<body>
+
+<div class="starfield" id="starfield"></div>
+
+<div class="page">
+
+  <a class="story-header" href="https://herosproof.github.io">
+    <p class="story-eyebrow">✦ Hero's Proof · 勇者の証 ✦</p>
+    <h1 class="story-title">Music Room<span class="jp">ミュージックルーム</span></h1>
+  </a>
+
+  <p class="room-intro">These are the songs from our quest! Listen to get ready for adventure! 💜
+    <span class="jp">冒険の曲だよ！聞いて冒険の準備をしよう！💜</span></p>
+
+  <div class="track-list" id="track-list"></div>
+
+  <div class="hub-row">
+    <a href="https://herosproof.github.io" class="btn-hub">🏠 Home / ホーム</a>
+  </div>
+
+  <footer>
+    <p class="footer-text">Hero's Proof <span>勇者の証</span><br>Made with 💜 for elementary English learners · 小学生の英語学習のために</p>
+  </footer>
+
+</div>
+
+<script>
+/* ── Starfield ── */
+(function(){
+  const sf=document.getElementById('starfield');
+  const glyphs=['♪','♫','✦','✧','⋆','★','·'];
+  const colors=['#f0d060','#c9a030','#d9c9a8','#c8a0e0','#f8f0c0'];
+  for(let i=0;i<60;i++){
+    const s=document.createElement('span');
+    const sz=(Math.random()*1.2+0.5).toFixed(2);
+    s.textContent=glyphs[Math.floor(Math.random()*glyphs.length)];
+    s.style.cssText=`top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${2+Math.random()*5}s;--delay:-${Math.random()*7}s;--sz:${sz}rem;--col:${colors[Math.floor(Math.random()*colors.length)]};`;
+    sf.appendChild(s);
+  }
+})();
+
+/* ════════════ TRACKS ════════════
+   Audio files live in the MUSIC repo (served at /music/):
+     assets/audio/main-theme.mp3
+     assets/audio/electric-mix.mp3
+     assets/audio/lofi-remix.mp3
+     assets/audio/lumi-battle.mp3
+     assets/audio/exploria.mp3
+   Missing files just won't play (button still shows, nothing happens — no crash).
+*/
+const ASSET='assets/audio/';
+
+const LYRICS_MAIN=[
+  ['Verse 1',[
+    ['Are you ready? Here we go!','準備はいい？さあ行こう！'],
+    ['Welcome to the magic show!','魔法のショーへようこそ！'],
+    ['We can jump, we can fight,','ジャンプできる、戦える、'],
+    ["Let's go! Our time is now, alright!",'レッツゴー！今だよ、さあ！'],
+  ]],
+  ['Verse 2',[
+    ['Where are you from? Who are you?','どこから来た？君は誰？'],
+    ["I'm a hero, just like you!",'僕もヒーロー、君と同じ！'],
+    ['Four crystals hiding, far and wide,','四つの水晶、隠れてる、'],
+    ['We can do it! We can try!','できるよ！挑戦しよう！'],
+  ]],
+  ['Pre-Chorus',[
+    ["What's your treasure? What's your dream?",'君の宝は？夢は何？'],
+    ["Together we're the perfect team!",'一緒なら最高のチーム！'],
+  ]],
+  ['Chorus',[
+    ["Hero's Proof! We can do it!",'ヒーローズ・プルーフ(勇者の証)！できるよ！'],
+    ["Together we'll get through it!",'一緒に乗り越えよう！'],
+    ['Magic, friends, and courage too,','魔法、友達、勇気もね、'],
+    ["This is our adventure! Let's go! Let's go!",'これが冒険！行こう！行こう！'],
+  ]],
+  ['Verse 3',[
+    ['What do you like? What do you do?','何が好き？何してる？'],
+    ['I want to go there—me and you!','一緒に行きたい、僕と君！'],
+    ['From the castle to the stars above,','お城から空の星まで、'],
+    ["This is what we're fighting for!",'これが戦う理由だよ！'],
+  ]],
+  ['Bridge',[
+    ['In the forest, on the mountain high,','森の中、高い山で、'],
+    ['We will save the world tonight!','今夜世界を救うんだ！'],
+    ["Here we go, it's our time to shine,",'さあ行こう、輝く時、'],
+    ['Heroes now! This proof is mine!','ヒーローだよ！この証は僕のもの！'],
+  ]],
+  ['Final Chorus',[
+    ["Hero's Proof! We can do it!",'ヒーローズ・プルーフ(勇者の証)！できるよ！'],
+    ["Together we'll get through it!",'一緒に乗り越えよう！'],
+    ['Magic, friends, and courage too,','魔法、友達、勇気もね、'],
+    ['We are heroes! Me and you!','僕らはヒーロー！僕と君！'],
+  ]],
+  ['Outro',[
+    ["Hero's Proof...",'ヒーローズ・プルーフ(勇者の証)...'],
+  ]],
+];
+
+const TRACKS=[
+  {id:'main',accent:'#c9a030',disc:'💿',
+   tagEn:'Theme Song',tagJp:'テーマソング',
+   titleEn:"Hero's Proof (Main Theme)",titleJp:'勇者の証（メインテーマ）',
+   descEn:'The main theme of Hero\u2019s Proof — a bright, soaring anthem about courage, friendship, and adventure.',
+   descJp:'「勇者の証」のメインテーマ。勇気と友情、そして冒険をうたう、明るくて壮大なテーマソングだよ。',
+   file:'main-theme.mp3',lyrics:LYRICS_MAIN},
+  {id:'electric',accent:'#3a78c0',disc:'⚡',
+   tagEn:'Remix',tagJp:'リミックス',
+   titleEn:"Hero's Proof v39-ish (Electric Mix)",titleJp:'勇者の証 v39-ish（エレクトリックミックス）',
+   descEn:'A high-energy electronic remix of the main theme, with crisp synth-vocals and driving beats turned all the way up.',
+   descJp:'メインテーマをアップテンポにアレンジしたエレクトロ・リミックス。きらめくシンセボーカルと力強いビートで、パワー全開のバージョンだよ。',
+   file:'electric-mix.mp3',lyrics:LYRICS_MAIN},
+  {id:'exploria',accent:'#5a9a3a',disc:'🗺️',
+   tagEn:'Exploration Theme',tagJp:'探検のテーマ',
+   titleEn:'Exploria (Exploration Theme)',titleJp:'エクスプロリア（探検のテーマ）',
+   descEn:'A gentle, wandering melody for quiet exploration — calm and full of wonder.',
+   descJp:'のんびり探検する時にぴったりの、おだやかなメロディー。心がやすらぐ、ふしぎな雰囲気の曲だよ。',
+   file:'exploria.mp3',lyrics:null},
+  {id:'lofi',accent:'#4a9a8a',disc:'🌙',
+   tagEn:'Remix',tagJp:'リミックス',
+   titleEn:'Exploria (Lo-fi Mix)',titleJp:'エクスプロリア（ローファイ・ミックス）',
+   descEn:'A mellow lo-fi take on the Exploria theme — soft, warm, and relaxing. Perfect for studying or winding down.',
+   descJp:'探検のテーマ「エクスプロリア」をやさしくアレンジした、ほっとするローファイ・バージョン。勉強のおともや、のんびりしたい時にぴったりだよ。',
+   file:'lofi-remix.mp3',lyrics:null},
+  {id:'battle',accent:'#9060c0',disc:'💜',
+   tagEn:'Battle Theme',tagJp:'バトルテーマ',
+   titleEn:'Lumi Battle Theme',titleJp:'VS！ルミ',
+   descEn:'An intense, fast-paced battle theme — pulsing magic and rising tension for the toughest challenges.',
+   descJp:'スピード感あふれる、緊張感たっぷりのバトルテーマ。魔法がきらめき、最高に手ごわい戦いを盛り上げるよ。',
+   file:'lumi-battle.mp3',lyrics:null},
+  {id:'beat',accent:'#e0743a',disc:'🥁',
+   tagEn:'Beat Challenge',tagJp:'ビートチャレンジ',
+   titleEn:"Lumi's Beat Challenge",titleJp:'ルミのビートチャレンジ',
+   descEn:'A punchy, fast-paced beat made for chanting words right on the rhythm. Can you keep up with Lumi?',
+   descJp:'リズムに合わせて言葉をとなえる、テンポの速いノリノリのビート。ルミについてこられるかな？',
+   file:'beat-challenge.mp3',lyrics:null},
+];
+
+function buildLyricsHTML(sections){
+  const head=`<div class="lyric-head"><span>English</span><span>日本語</span></div>`;
+  return head+sections.map(([label,lines])=>
+    `<p class="lyric-section">${label}</p>`+
+    lines.map(([en,jp])=>`<div class="lyric-row"><div class="en">${en}</div><div class="jp">${jp}</div></div>`).join('')
+  ).join('');
+}
+
+function fmtTime(s){
+  if(!isFinite(s))return '0:00';
+  const m=Math.floor(s/60),sec=Math.floor(s%60);
+  return m+':'+String(sec).padStart(2,'0');
+}
+
+const list=document.getElementById('track-list');
+let currentAudio=null,currentDisc=null,currentBtn=null;
+
+TRACKS.forEach(t=>{
+  const card=document.createElement('div');
+  card.className='track-card';
+  card.style.setProperty('--c-accent',t.accent);
+
+  const lyricsBtnHTML=t.lyrics?`<button class="lyrics-toggle" type="button">📜 Show Lyrics ・ 歌詞を見る</button>`:'';
+
+  card.innerHTML=`
+    <div class="track-top">
+      <div class="track-disc">${t.disc}</div>
+      <div>
+        <p class="track-tag">${t.tagEn}<span class="jp">· ${t.tagJp}</span></p>
+        <p class="track-title">${t.titleEn}<span class="jp">${t.titleJp}</span></p>
+      </div>
+    </div>
+    <p class="track-desc">${t.descEn}<span class="jp">${t.descJp}</span></p>
+    <div class="player">
+      <button class="play-btn" type="button" aria-label="Play">▶</button>
+      <div class="prog-track"><div class="prog-fill"></div></div>
+      <span class="time">0:00 / 0:00</span>
+    </div>
+    <div class="track-actions">
+      ${lyricsBtnHTML}
+      <a class="dl-btn" href="${ASSET+t.file}" download>⬇ Download ・ ダウンロード</a>
+    </div>
+    ${t.lyrics?`<div class="lyrics-panel hide">${buildLyricsHTML(t.lyrics)}</div>`:''}
+  `;
+  list.appendChild(card);
+
+  /* ── wire up player ── */
+  const audio=new Audio(ASSET+t.file);
+  const disc=card.querySelector('.track-disc');
+  const btn=card.querySelector('.play-btn');
+  const progTrack=card.querySelector('.prog-track');
+  const progFill=card.querySelector('.prog-fill');
+  const timeEl=card.querySelector('.time');
+
+  btn.addEventListener('click',()=>{
+    if(audio.paused){
+      if(currentAudio&&currentAudio!==audio){currentAudio.pause();}
+      if(currentDisc&&currentDisc!==disc)currentDisc.classList.remove('spinning');
+      if(currentBtn&&currentBtn!==btn)currentBtn.textContent='▶';
+      audio.play().catch(()=>{});
+      currentAudio=audio;currentDisc=disc;currentBtn=btn;
+    }else{
+      audio.pause();
+    }
+  });
+  audio.addEventListener('play',()=>{btn.textContent='⏸';disc.classList.add('spinning');});
+  audio.addEventListener('pause',()=>{btn.textContent='▶';disc.classList.remove('spinning');});
+  audio.addEventListener('ended',()=>{btn.textContent='▶';disc.classList.remove('spinning');progFill.style.width='0%';});
+  audio.addEventListener('timeupdate',()=>{
+    const pct=audio.duration?(audio.currentTime/audio.duration*100):0;
+    progFill.style.width=pct+'%';
+    timeEl.textContent=fmtTime(audio.currentTime)+' / '+fmtTime(audio.duration);
+  });
+  audio.addEventListener('loadedmetadata',()=>{
+    timeEl.textContent=fmtTime(0)+' / '+fmtTime(audio.duration);
+  });
+  progTrack.addEventListener('click',e=>{
+    if(!audio.duration)return;
+    const rect=progTrack.getBoundingClientRect();
+    const pct=(e.clientX-rect.left)/rect.width;
+    audio.currentTime=pct*audio.duration;
+  });
+
+  /* ── lyrics toggle ── */
+  const lyricsBtn=card.querySelector('.lyrics-toggle');
+  if(lyricsBtn){
+    const panel=card.querySelector('.lyrics-panel');
+    lyricsBtn.addEventListener('click',()=>{
+      const hidden=panel.classList.toggle('hide');
+      lyricsBtn.innerHTML=hidden?'📜 Show Lyrics ・ 歌詞を見る':'📜 Hide Lyrics ・ 歌詞をかくす';
+    });
+  }
+});
+</script>
+</body>
+</html>
